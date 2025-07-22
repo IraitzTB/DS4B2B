@@ -1,6 +1,6 @@
 ![The Bridge](./assets/TheBridge_logo.png)
 
-# Bootcamp - Data Science
+# Ciencia de datos Empresarial
 
 Para clonar este repositorio por https:
 
