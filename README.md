@@ -1,4 +1,4 @@
-![The Bridge](./assets/TheBridge_logo.png)
+![The Bridge](./assets/images/TheBridge_logo.png)
 
 # Ciencia de datos Empresarial
 
