@@ -5,9 +5,18 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
+    "dlt>=1.14.1",
+    "duckdb-engine>=0.17.0",
+    "duckdb>=1.3.2",
     "ipykernel>=6.30.0",
     "matplotlib>=3.10.3",
     "pandas>=2.3.1",
+    "requests>=2.32.4",
     "scipy>=1.16.0",
     "seaborn>=0.13.2",
+    "sqlalchemy>=2.0.41",
+    "ibis-framework[duckdb]>=10.6.0",
+    "snowflake-connector-python[pandas]>=3.16.0",
+    "snowflake-snowpark-python>=1.35.0",
+    "python-dotenv>=1.1.1",
 ]
