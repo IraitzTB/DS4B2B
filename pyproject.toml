@@ -29,4 +29,6 @@ dependencies = [
     "comet-ml>=3.50.0",
     "gradio>=5.38.2",
     "evidently>=0.7.11",
+    "langchain>=0.3.27",
+    "langchain-google-genai>=2.1.8",
 ]
