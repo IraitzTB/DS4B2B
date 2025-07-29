@@ -31,4 +31,5 @@ dependencies = [
     "evidently>=0.7.11",
     "langchain>=0.3.27",
     "langchain-google-genai>=2.1.8",
+    "deepeval>=3.3.2",
 ]
