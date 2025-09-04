@@ -209,3 +209,6 @@ __marimo__/
 
 # NPZ
 *.npz
+
+# Vector DB
+lancedb
