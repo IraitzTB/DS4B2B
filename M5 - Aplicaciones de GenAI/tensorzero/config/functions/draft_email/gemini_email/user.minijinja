@@ -1,0 +1,5 @@
+Crea un email con la siguiente información:
+
+- Receptor: {{ recipient_name }}
+- Emisario: {{ sender_name }}
+- Propósito del email: {{ email_purpose }}

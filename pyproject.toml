@@ -1,6 +1,6 @@
 [project]
 name = "ds4b2b"
-version = "0.1.0"
+version = "0.1.1"
 description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.12"
@@ -46,4 +46,12 @@ dependencies = [
     "unstructured>=0.18.14",
     "markdown>=3.8.2",
     "surrealdb>=1.0.6",
+]
+
+[dependency-groups]
+serving = [
+    "accelerate>=1.10.1",
+    "datasets>=4.0.0",
+    "tensorzero>=2025.9.0",
+    "vllm>=0.10.1.1",
 ]

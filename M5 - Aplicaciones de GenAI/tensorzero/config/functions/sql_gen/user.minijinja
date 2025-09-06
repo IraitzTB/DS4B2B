@@ -1,0 +1,4 @@
+Crea una consulta SQL para Microsoft SQL Server con la siguiente información.
+
+- Petición: {{ query }}
+- Contexto: {{ context }}

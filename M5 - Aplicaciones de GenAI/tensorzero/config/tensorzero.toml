@@ -1,0 +1,105 @@
+[gateway]
+# Trazas
+# export.otlp.traces.enabled = true
+
+# ┌────────────────────────────────────────────────────────────────────────────┐
+# │                                   MODELS                                   │
+# └────────────────────────────────────────────────────────────────────────────┘
+
+[models.gpt]
+routing = ["openai"]
+
+[models.gpt.providers.openai]
+type = "openai"
+model_name = "openai::gpt-4o-mini"
+
+# ┌────────────────────────────────────────────────────────────────────────────┐
+# │                                   TOOLS                                    │
+# └────────────────────────────────────────────────────────────────────────────┘
+
+# Herramientas
+[tools.get_temperature]
+description = "Get the current temperature for a given location."
+parameters = "tools/get_temperature.json"
+
+# ┌────────────────────────────────────────────────────────────────────────────┐
+# │                                 FUNCTIONS                                  │
+# └────────────────────────────────────────────────────────────────────────────┘
+
+# Una función define la tarea que exponemos
+[functions.generate_haiku]
+type = "chat"
+
+[functions.mischievous_chatbot]
+type = "chat"
+tools = ["get_temperature"]
+
+[functions.draft_email]
+type = "chat"
+user_schema = "functions/draft_email/user_schema.json"
+
+# Una función define la tarea que exponemos
+[functions.generate_sql]
+type = "chat"
+user_schema = "functions/sql_gen/sql_schema.json"
+
+# ... una variante es una forma en la que vamos a resolverlo (prompt, modelo, etc.).
+[functions.generate_haiku.variants.gpt_haiku]
+type = "chat_completion"
+model = "gpt"
+
+# ... una variante es una forma en la que vamos a resolverlo (prompt, modelo, etc.).
+[functions.generate_haiku.variants.gemini_haiku]
+type = "chat_completion"
+model = "google_ai_studio_gemini::gemini-2.5-flash"
+
+[functions.mischievous_chatbot.variants.gemini_chatbot]
+type = "chat_completion"
+model = "google_ai_studio_gemini::gemini-2.5-flash"
+
+[functions.generate_sql.variants.gemini_sql]
+type = "chat_completion"
+model = "google_ai_studio_gemini::gemini-2.5-flash"
+system_template = "functions/sql_gen/system.minijinja"
+user_template = "functions/sql_gen/user.minijinja"
+
+[functions.draft_email.variants.gemini_email]
+type = "chat_completion"
+weight = 1.0
+model = "google_ai_studio_gemini::gemini-2.5-flash"
+system_template = "functions/draft_email/gemini_email/system.minijinja"
+user_template = "functions/draft_email/gemini_email/user.minijinja"
+
+
+# ┌────────────────────────────────────────────────────────────────────────────┐
+# │                                  METRICS                                   │
+# └────────────────────────────────────────────────────────────────────────────┘
+
+[metrics.task_success]
+type = "boolean"
+optimize = "max"
+level = "episode"
+
+[metrics.good_sql]
+type = "boolean"
+optimize = "max"
+level = "inference"
+
+[evaluations.sql_eval]
+type = "static"
+function_name = "generate_sql"
+
+[evaluations.sql_eval.evaluators.exact_match]
+type = "exact_match"
+
+[evaluations.sql_eval.evaluators.valid_sql]
+type = "llm_judge"
+output_type = "boolean"  # LLM judge should generate a boolean (or float)
+optimize = "max"  # higher is better
+cutoff = 0.95  # if the variant scores <95% = bad
+
+[evaluations.sql_eval.evaluators.valid_sql.variants.gemini_judge]
+type = "chat_completion"
+model = "google_ai_studio_gemini::gemini-2.5-flash"
+system_instructions = "functions/sql_gen/eval_instructions.txt"
+json_mode = "strict"
